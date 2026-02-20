@@ -15,23 +15,22 @@ const ResultsDisplay = ({ result }) => {
   const noChurnPercent = ((1 - churn_probability) * 100).toFixed(1);
 
   useEffect(() => {
-    // Auto-fetch recommendations if churn is predicted
-    if (churn) {
-      fetchRecommendations();
-    }
-  }, [churn]);
+  if (churn) {
+    fetchRecommendations();
+  }
+}, [churn, fetchRecommendations]);
 
-  const fetchRecommendations = async () => {
-    setLoadingRecs(true);
-    try {
-      const recs = await getRecommendations(result.customerData || {});
-      setRecommendations(recs);
-    } catch (error) {
-      console.error('Error fetching recommendations:', error);
-    } finally {
-      setLoadingRecs(false);
-    }
-  };
+  const fetchRecommendations = useCallback(async () => {
+  setLoadingRecs(true);
+  try {
+    const recs = await getRecommendations(result.customerData || {});
+    setRecommendations(recs);
+  } catch (error) {
+    console.error('Error fetching recommendations:', error);
+  } finally {
+    setLoadingRecs(false);
+  }
+}, [result]);
 
   const chartData = {
     labels: ['Will Churn', 'Will Stay'],
