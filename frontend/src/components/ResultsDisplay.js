@@ -14,13 +14,7 @@ const ResultsDisplay = ({ result }) => {
   const churnPercent = (churn_probability * 100).toFixed(1);
   const noChurnPercent = ((1 - churn_probability) * 100).toFixed(1);
 
-  useEffect(() => {
-  if (churn) {
-    fetchRecommendations();
-  }
-}, [churn, fetchRecommendations]);
-
-  const fetchRecommendations = useCallback(async () => {
+ const fetchRecommendations = useCallback(async () => {
   setLoadingRecs(true);
   try {
     const recs = await getRecommendations(result.customerData || {});
@@ -31,6 +25,12 @@ const ResultsDisplay = ({ result }) => {
     setLoadingRecs(false);
   }
 }, [result]);
+
+useEffect(() => {
+  if (churn) {
+    fetchRecommendations();
+  }
+}, [churn, fetchRecommendations]);
 
   const chartData = {
     labels: ['Will Churn', 'Will Stay'],
