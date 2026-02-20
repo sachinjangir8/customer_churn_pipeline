@@ -37,6 +37,12 @@ ENV/
 models/*.pkl
 models/*.h5
 
+# Allow backend model files for deployment
+!backend/models/
+!backend/models/*.pkl
+!backend/models/*.joblib
+!backend/models/*.h5
+
 # Data
 data/*.csv
 data/*.json
